@@ -2,12 +2,12 @@
   <button matIconButton>
     <mat-icon style="color: #ba005c">menu</mat-icon>
   </button>
-  <span>My App</span>
+  <a [routerLink]="'home'">My App</a>
   <span class="spacer"></span>
   <button matIconButton>
     <mat-icon style="color: #ba005c">favorite</mat-icon>
   </button>
-  <button matIconButton>
-    <mat-icon style="color: #ba005c">share</mat-icon>
+  <button mat-button (click)="navegarLogin()">
+    Iniciar Seción
   </button>
 </mat-toolbar>

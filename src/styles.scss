@@ -6,6 +6,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 // Customize the entire app. Change :root to your selector if you want to scope the styles.
+.full-width{
+  width: 100%;
+}
+
 :root {
   @include mat.toolbar-overrides((
     container-background-color: #ffd9e1,
