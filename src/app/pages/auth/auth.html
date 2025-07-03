@@ -1,4 +1,4 @@
-<div class="row justify-content-md-center pt-5">
+<div class="row justify-content-md-center p-5">
     <div class="col col-lg-4">
         <mat-card appearance="filled">
             <mat-card-header>
@@ -8,19 +8,18 @@
                 <mat-form-field class="full-width pt-2" appearance="outline">
                     <mat-label>Usuario</mat-label>
                     <input matInput>
-                    <button matIconButton matPrefix>
+                    <button matIconButton matSuffix>
                         <mat-icon style="color: #ba005c">account_box</mat-icon>
                     </button>
                 </mat-form-field>
 
                 <mat-form-field class="full-width" appearance="outline">
                     <mat-label>Contraseña</mat-label>
-                    <input type="password" matInput>
-                    <button matIconButton matPrefix>
-                        <mat-icon style="color: #ba005c">lock</mat-icon>
+                    <input [type]="hide ? 'password' : 'text'" matInput>
+                    <button matIconButton matSuffix (click)="hide = !hide">
+                        <mat-icon style="color: #ba005c">{{ hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                 </mat-form-field>
-
                 <button class="full-width" matButton="filled">
                     Acceder
                 </button>
