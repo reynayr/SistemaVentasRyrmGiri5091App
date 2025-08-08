@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
-import { AuthenticatorResponse } from './auth.interface';
 
 const helper = new JwtHelperService;
 
@@ -16,7 +15,7 @@ const helper = new JwtHelperService;
 export class AuthService {
 
   private token = new BehaviorSubject<string>("");
-  private tokenData = new BehaviorSubject<any>({ });
+  private tokenData = new BehaviorSubject<any>({});
   private isLogged = new BehaviorSubject<boolean>(false);
   private isToggle = new BehaviorSubject<boolean>(false);
 
@@ -24,8 +23,7 @@ export class AuthService {
     private snackBar: MatSnackBar,
     private router: Router,
     private http: HttpClient,
-    @Inject(PLATFORM_ID) private plataformId: any
-    ) { this.checkToken(); }
+    @Inject(PLATFORM_ID) private plataformId: any) { }
 
   get token$() {
     return this.token.asObservable();
@@ -47,7 +45,22 @@ export class AuthService {
     return this.isToggle.asObservable();
   }
 
-    checkToken() { 
+  login(credenciales: any) {
+    return this.http.post<any>(`${environment.API_URL}/auth`, credenciales)
+      .pipe( map( (data: any) => {
+//rellenar login
+//onSubmit en pages/auth auth.ts
+        return data;
+
+      } ),
+      catchError( (error) => this.handleError(error) ));
+   }
+
+  saveLocalStorage(token: string) { 
+    sessionStorage.setItem("accessToken", token);
+  }
+
+  checkToken() { 
     if (isPlatformBrowser(this.plataformId)){
       const token = sessionStorage.getItem("accessToken");
       if (token) {
@@ -65,31 +78,6 @@ export class AuthService {
       }
     }
   }
-
-
-  login(credenciales: any): Observable<AuthenticatorResponse | void> {
-    return this.http.post<AuthenticatorResponse>(`${environment.API_URL}/auth`, credenciales)
-      .pipe( map( (data: AuthenticatorResponse) => {
-
-        if (data.token) {
-          this.saveLocalStorage(data.token);
-          this.token.next(data.token);
-          this.router.navigate(['/home']);
-
-          this.checkToken();
-
-        }
-
-        return data;
-
-      } ),
-      catchError( (error) => this.handleError(error) ));
-   }
-
-  saveLocalStorage(token: string) { 
-    sessionStorage.setItem("accessToken", token);
-  }
-
 
   logout() {
     sessionStorage.removeItem("accessToken");

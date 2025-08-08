@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,11 +7,5 @@ import { Router } from '@angular/router';
   styleUrl: './home.scss'
 })
 export class Home {
-
-  constructor(private router: Router) {}
-
-  onNavigate() {
-    this.router.navigate(['/usuarios']);
-  }
 
 }
