@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { BaseForm } from '../../shared/utils/base.form';
+import { AuthService } from '../../shared/services/auth.service';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { BaseForm } from '../../shared/utils/base.form';
   templateUrl: './auth.html',
   styleUrl: './auth.scss'
 })
-export class Auth implements OnInit, OnDestroy{
+export class Auth implements OnInit, OnDestroy {
   hide = true;
 
   private destroy$ = new Subject<any>();
@@ -20,7 +21,8 @@ export class Auth implements OnInit, OnDestroy{
   });
 
   constructor(private fb: FormBuilder,
-              public baseForm: BaseForm) {
+    public baseForm: BaseForm,
+    public authService: AuthService) {
     console.log("init constructor")
   }
 
@@ -30,13 +32,26 @@ export class Auth implements OnInit, OnDestroy{
 
   onSubmit() {
 
-    // Verid¿ficar que el formulario sea correcto
-    if(this.loginForm.invalid) return;
+    // Veridficar que el formulario sea correcto
+    if (this.loginForm.invalid) return;
 
     // Si todo es correcto obtener el usuario y contraseña para enviarlos
     const form = this.loginForm.value;
 
-    console.log(form);
+    this.authService.login(form).subscribe({
+      next: (response) => {
+        console.log('Login exitoso:', response);
+        // Ejemplo: guardar token
+        localStorage.setItem('token', response.token);
+
+        // Aquí podrías redirigir si tienes Router:
+        // this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        console.error('Error en login:', err);
+        alert('Usuario o contraseña incorrectos');
+      }
+    });
   }
 
   ngOnDestroy(): void {
