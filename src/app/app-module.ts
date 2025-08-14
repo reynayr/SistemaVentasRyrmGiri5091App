@@ -7,6 +7,7 @@ import { MaterialModule } from './material.module';
 import { Header } from './shared/components/header/header';
 import { Footer } from './shared/components/footer/footer'
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners()

@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { BaseForm } from '../../shared/utils/base.form';
 import { AuthService } from '../../shared/services/auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -22,7 +23,8 @@ export class Auth implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder,
     public baseForm: BaseForm,
-    public authService: AuthService) {
+    public authService: AuthService,
+    private router: Router) {
     console.log("init constructor")
   }
 
@@ -45,6 +47,7 @@ export class Auth implements OnInit, OnDestroy {
         localStorage.setItem('token', response.token);
 
         // Aquí podrías redirigir si tienes Router:
+        this.router.navigate(['/user']);
         // this.router.navigate(['/dashboard']);
       },
       error: (err) => {
