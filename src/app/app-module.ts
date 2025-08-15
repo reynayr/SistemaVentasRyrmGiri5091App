@@ -5,7 +5,9 @@ import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { MaterialModule } from './material.module';
 import { Header } from './shared/components/header/header';
-import { Footer } from './shared/components/footer/footer';
+import { Footer } from './shared/components/footer/footer'
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { Footer } from './shared/components/footer/footer';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MaterialModule
+    MaterialModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners()
